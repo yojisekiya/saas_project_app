@@ -1,0 +1,18 @@
+databases:
+  - name: saas_project_app
+    databaseName: saas_project_app
+    user: saas_project_app
+
+services:
+  - type: web
+    name: saas_project_app
+    env: ruby
+    buildCommand: './bin/render-build.sh'
+    startCommand: 'bundle exec puma -C config/puma.rb'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: saas_project_app
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
